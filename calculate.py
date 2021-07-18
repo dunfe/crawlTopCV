@@ -2,6 +2,16 @@ import csv
 from statistics import mean, variance
 
 
+def read_it_file(file_name):
+    _data = []
+    with open(file_name + '.csv', 'r', encoding='utf-16') as salaries_file:
+        salaries_reader = csv.reader(salaries_file)
+        for row in salaries_reader:
+            _data.append(row)
+
+    return _data
+
+
 def read_file(file_name):
     all_salary = []
     with open(file_name + '.csv', 'r', encoding='utf-16') as salaries_file:

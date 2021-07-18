@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from statistics import mean, stdev
-from calculate import read_file
+from calculate import read_file, read_it_file
 
 
 def draw_multiple_boxplot(majors):
@@ -32,6 +32,38 @@ def draw_multiple_histogram(majors):
     for major in majors:
         data = read_file(major)
         draw_histogram(data, major)
+
+
+def get_data_question_five(location):
+    data = read_it_file('Công nghệ thông tin')
+    count = 0
+
+    result = []
+
+    for item in data:
+        if count == 0:
+            count += 1
+            continue
+
+        _location = item[7]
+
+        if location == _location:
+            result.append(float(item[1]))
+        else:
+            continue
+        count += 1
+
+    return result
+
+
+def draw_question_five():
+    for item in ['Hà Nội', 'Hồ Chí Minh']:
+        _data = get_data_question_five(item)
+        draw_histogram(_data, item)
+        _mean = mean(_data)
+        _min = min(_data)
+        _max = max(_data)
+        print(item + ": " + str(_min), str(_mean), str(_max))
 
 
 def draw_histogram(data, name):
@@ -67,6 +99,6 @@ def draw_histogram(data, name):
 
     fig.tight_layout()
     save_path = 'C:/Users/dung2/PycharmProjects/crawlTopCV/image/' + name + '.png'
-    # plt.savefig(save_path)
+    plt.savefig(save_path)
     plt.show()
 
