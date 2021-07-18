@@ -134,7 +134,7 @@ def get_data_of_url(all_job_url):
     count = 1
     data_len = len(all_job_url)
     for _url in all_job_url:
-        print('Getting job: ' + str(count) + ' of ' + str(all_job_url))
+        print('Getting job: ' + str(count) + ' of ' + str(data_len))
         count += 1
 
         job_data = []
