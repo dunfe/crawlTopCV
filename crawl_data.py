@@ -13,11 +13,11 @@ from selenium.webdriver.common.action_chains import ActionChains
 email = 'qngnud@gmail.com'
 password = 'svT5anz!q.6S#9L'
 
-chrome_options = webdriver.ChromeOptions()
-prefs = {"profile.managed_default_content_settings.images": 2}
-chrome_options.add_experimental_option("prefs", prefs)
+# chrome_options = webdriver.ChromeOptions()
+# prefs = {"profile.managed_default_content_settings.images": 2}
+# chrome_options.add_experimental_option("prefs", prefs)
 
-driver = webdriver.Chrome(chrome_options=chrome_options)
+driver = webdriver.Chrome()
 
 url = 'https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-c10131'
 
@@ -60,7 +60,6 @@ def search_by_major():
         search_button.click()
 
         number_of_page = get_number_of_pages()
-        get_salary()
         job_urls = get_job_url(number_of_page)
         data = get_data_of_url(job_urls)
         # data = get_data(number_of_page)
@@ -99,7 +98,7 @@ def get_all_url():
 def get_salary():
     salaries = []
     page_source = BeautifulSoup(driver.page_source, features="html.parser")
-    salaries_html = page_source.find_all('div', class_='col-sm-8')
+    salaries_html = page_source.find_all('span', class_='text-highlight')
 
     for salary in salaries_html:
         salary_text = salary.contents[2].contents[0].contents[0].get_text().strip()
@@ -121,10 +120,13 @@ def print_to_csv(data, file_name):
         salaries_writer = csv.DictWriter(salaries_file, delimiter=',', lineterminator='\n', fieldnames=header)
         salaries_writer.writeheader()
         for job in data:
-            salaries_writer.writerow(
-                {header[0]: job[0], header[1]: job[1], header[2]: job[2], header[3]: job[3], header[4]: job[4],
-                 header[5]: job[5]
-                    , header[6]: job[6], header[7]: job[7]})
+            try:
+                salaries_writer.writerow(
+                    {header[0]: job[0], header[1]: job[1], header[2]: job[2], header[3]: job[3], header[4]: job[4],
+                     header[5]: job[5]
+                        , header[6]: job[6], header[7]: job[7]})
+            finally:
+                continue
 
 
 def get_data_of_url(all_job_url):
@@ -164,7 +166,7 @@ def get_data_of_url(all_job_url):
             job_location = info_job[6].get_text().strip()
 
             job_data = [job_title.get_text().strip(), job_salary, job_time, job_hr
-                        , job_position, job_exp, job_gender, job_location]
+                , job_position, job_exp, job_gender, job_location]
 
         all_data.append(job_data)
 
@@ -192,7 +194,6 @@ def get_job_url(number_of_page):
 def get_data(number_of_page):
     print('Get data...')
     salaries = []
-    all_job_url = []
     if number_of_page > 0:
         for page in range(number_of_page):
             print('Getting page: ', page + 1)
