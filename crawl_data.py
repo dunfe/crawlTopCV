@@ -195,6 +195,7 @@ def get_job_url(number_of_page):
 def get_data(number_of_page):
     print('Get data...')
     salaries = []
+    
     if number_of_page > 0:
         for page in range(number_of_page):
             print('Getting page: ', page + 1)
@@ -203,7 +204,9 @@ def get_data(number_of_page):
 
             if len(salary_of_this_page) > 0:
                 salaries = salaries + salary_of_this_page
+
             scroll_to_bottom()
+
             try:
                 element = WebDriverWait(driver, 10).until(
                     EC.visibility_of_element_located((By.LINK_TEXT, '›')))
