@@ -195,7 +195,7 @@ def get_job_url(number_of_page):
 def get_data(number_of_page):
     print('Get data...')
     salaries = []
-    
+
     if number_of_page > 0:
         for page in range(number_of_page):
             print('Getting page: ', page + 1)
