@@ -11,7 +11,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
 email = 'qngnud@gmail.com'
-password = 'svT5anz!q.6S#9L'
+password = ''
 
 # chrome_options = webdriver.ChromeOptions()
 # prefs = {"profile.managed_default_content_settings.images": 2}
